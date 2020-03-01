@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">GGPDFViewer</string>
+    <string name="title_activity_main">PDFViewer</string>
+    <string name="hello_world">Hello world!</string>
+</resources>
