@@ -8,6 +8,7 @@ import com.joanzapata.pdfview.listener.OnPageChangeListener;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.Environment;
@@ -49,6 +50,7 @@ public class MainActivity extends Activity
 
         mPDFView.fromFile(pdfFile)
                 .defaultPage(mPageNumber)
+                .mask(Color.BLACK, 0)
                 .onPageChange(new OnPageChangeListener() {
                     @Override
                     public void onPageChanged(int page, int pageCount) {

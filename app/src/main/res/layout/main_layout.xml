@@ -6,6 +6,7 @@
     <com.joanzapata.pdfview.PDFView
         android:id="@+id/pdfViewPager"
         android:layout_width="640px"
-        android:layout_height="360px"/>
+        android:layout_height="360px"
+        android:background="#000000" />
 
 </LinearLayout>
