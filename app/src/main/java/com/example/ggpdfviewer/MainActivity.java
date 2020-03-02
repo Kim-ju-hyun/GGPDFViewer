@@ -3,6 +3,7 @@ package com.example.ggpdfviewer;
 import com.google.android.glass.media.Sounds;
 import com.google.android.glass.touchpad.Gesture;
 import com.google.android.glass.touchpad.GestureDetector;
+import com.google.android.glass.view.WindowUtils;
 import com.joanzapata.pdfview.PDFView;
 import com.joanzapata.pdfview.listener.OnPageChangeListener;
 
@@ -12,7 +13,10 @@ import android.graphics.Color;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.Environment;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
+import android.view.WindowManager;
 
 import java.io.File;
 
@@ -26,6 +30,13 @@ public class MainActivity extends Activity
     @Override
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
+
+        // Requests a voice menu on this activity. As for any other window feature,
+        // be sure to request this before setContentView() is called
+        getWindow().requestFeature(WindowUtils.FEATURE_VOICE_COMMANDS);
+
+        // Ensure screen stays on during demo.
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         setContentView(R.layout.main_layout);
 
@@ -95,4 +106,41 @@ public class MainActivity extends Activity
         }
     }
 
+    @Override
+    public boolean onCreatePanelMenu(int featureId, Menu menu) {
+        if (featureId == WindowUtils.FEATURE_VOICE_COMMANDS) {
+            getMenuInflater().inflate(R.menu.voice_menu, menu);
+            return true;
+        }
+
+        // Pass through to super to setup touch menu.
+        return super.onCreatePanelMenu(featureId, menu);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.voice_menu, menu);
+        return true;
+        //return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onMenuItemSelected(int featureId, MenuItem item) {
+        if (featureId == WindowUtils.FEATURE_VOICE_COMMANDS) {
+            switch (item.getItemId()) {
+                case R.id.page_back:
+                    mPDFView.jumpTo(mPageNumber - 1);
+                    break;
+                case R.id.page_forward:
+                    mPDFView.jumpTo(mPageNumber + 1);
+                    break;
+                default:
+                    return true;
+            }
+            return true;
+        }
+
+        // Good practice to pass through to super if not handled
+        return super.onMenuItemSelected(featureId, item);
+    }
 }

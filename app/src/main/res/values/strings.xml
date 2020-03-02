@@ -2,4 +2,7 @@
     <string name="app_name">GGPDFViewer</string>
     <string name="title_activity_main">PDFViewer</string>
     <string name="hello_world">Hello world!</string>
+
+    <string name="page_back">GO BACK</string>
+    <string name="page_forward">GO FORWARD</string>
 </resources>
